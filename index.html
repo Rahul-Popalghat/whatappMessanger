@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-
+
+scale=1, shrink-to-fit=no">
+    <title>WA Message</title>
+<style>
+*{ margin:0px; padding:0px;box-sizing: border-box; color:rgba(0, 0, 
+
+12, 0.5); }
+.body{display: grid; width:100vw; height:100vh; min-height:300px; 
+
+min-width:250px; justify-content: center; }
+.card{box-shadow: grey 0px 0px 10px ; margin: auto;text-align: 
+
+center; width: max-content;padding:30px; display: grid;}
+.card input{margin:5px; text-align: center; padding:5px; }
+.card h1{ border-bottom:0.1px grey solid;}
+.card input::placeholder{}
+input[type=submit]{border-radius:0.5rem; color:whitesmoke; text-
+
+decoration:italic; font-size:x-large; border-style-type:none;}
+</style>
+</head>
+<body>
+<div class="body">
+
+<form class="card" id='frm'>
+<h1>Whats App Message</h1></br>
+<p>Country : India (+91)</p><br>
+<input type="number" placeholder="type mobile number" id="mobNumber" 
+
+name="mobNumber" required="required"></br><p id='er'></p> <input 
+
+type="text" id="msg"  name="msg" placeholder="type msg 
+
+here"></br><input type='file'></br><input type="Submit" value="Send" 
+
+style='background:rgba(10, 100, 10, 0.5)'>
+
+</form>
+
+</div>
+
+<script>
+var frm = document.getElementById('frm');
+
+var mob = document.getElementById('mobNumber');
+
+frm.onsubmit = async function (e){
+e.preventDefault(); 
+var sd = mob.value.trim().split('').splice(-10).join('');
+var msg = document.getElementById("msg").value; 
+let ur = `whatsapp://send?phone=91${sd}&text=${encodeURI(msg)}`;
+console.log(ur);
+window.open(ur);
+}
+
+
+mob.oninput = function (e){
+var sd = e.target.value.trim().split('').splice(-10).join('');
+document.getElementById('mobNumber').value = '';
+document.getElementById('mobNumber').value = sd;
+console.log(sd);
+}
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
