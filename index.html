@@ -49,6 +49,8 @@ var frm = document.getElementById('frm');
 
 var mob = document.getElementById('mobNumber');
 
+var subBtn = document.querySelectorAll('form > submit')[0];
+
 frm.onsubmit = async function (e){
 e.preventDefault(); 
 var sd = mob.value.trim().split('').splice(-10).join('');
@@ -60,13 +62,23 @@ window.open(ur);
 
 
 mob.oninput = function (e){
+let valid = validate(e.target.value);
+if(valid = true) {
+subBtn.disabled = false;
+}else{subBtn.disabled = true; subBtn.disabled = disabled}
+
 var sd = e.target.value.trim().split('').splice(-10).join('');
 document.getElementById('mobNumber').value = '';
 document.getElementById('mobNumber').value = sd;
 console.log(sd);
 }
 
-
+function validate(m){
+If (m.length > 10 || m.length < 10){
+return false;
+}
+else{return true;}
+}
 
 
 
