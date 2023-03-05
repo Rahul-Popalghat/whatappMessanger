@@ -2,25 +2,32 @@
 <html lang='en'>
 <head>
 <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-
-
-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WA Message</title>
 <style>
-*{ margin:0px; padding:0px;box-sizing: border-box; color:rgba(0, 0, 
-
-12, 0.5); }
-.body{display: grid; width:100vw; height:100vh; min-height:300px; 
-
-min-width:250px; justify-content: center; }
-.card{box-shadow: grey 0px 0px 10px ; margin: auto;text-align: 
-
-center; width: max-content;padding:30px; display: grid;}
+*{ margin:0px; padding:0px;box-sizing: border-box; color:rgba(0, 0, 12, 0.7); }
+.body{display: grid; width:100vw; height:100vh; min-height:300px; min-width:250px; justify-content: center; }
+.card{box-shadow: grey 0px 0px 10px ; margin: auto;text-align: center; width: max-content;padding:30px; display: grid;}
 .card input{margin:5px; text-align: center; padding:5px; }
-.card h1{ border-bottom:0.1px grey solid;}
+.card h1{ border-bottom:0.1px grey solid; }
 
-input[type=submit]{border-radius:0.5rem; color:whitesmoke;
-     text-ssdecoration:italic; font-size:x-large; border-style-type:none;}
+input[type=submit]{border-radius:0.5rem; color:whitesmoke; text-decoration:italic; font-size:x-large; border-style:none;}
+#er, #changeCountryBtn, #resetCountryBtn{color: red; font-size: xx-small;}
+#changeCountryBtn, #resetCountryBtn{margin: 10px; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.card  span   div  {display: flex; justify-content: left; margin: 0px 10px;}
+.card  span   div a{margin: 0px 10px;}
+.card input{border-radius: 1.5rem; box-shadow: 5px 5px 10px grey; border:none;padding: 5px; outline: transparent;}
+#countryCode{width: 3rem; min-width: 10px; border: none;margin-left:0px;text-align: left; background: transparent; box-shadow: none;}
+#countryCode:focus{border-radius: 5px; border: solid thin rgba(0, 0, 12, 0.3); outline: transparent;}
+::placeholder{color: rgba(0, 0, 12, 0.3)}
 </style>
 </head>
 <body>
@@ -28,50 +35,78 @@ input[type=submit]{border-radius:0.5rem; color:whitesmoke;
 
 <form class="card" id='frm'>
 <h1>Whats App Message</h1></br>
-<p>Country : India (+91)</p><br>
-<input type="number" placeholder="type mobile number" id="mobNumber" 
 
-name="mobNumber" required="required"></br><p id='er'></p> <input 
 
-type="text" id="msg"  name="msg" placeholder="type msg 
+<span style="display: flex; flex-direction: column;  justify-content: left; align-items: center; "> <div style="align-items: center;"> <p>Country Code : &#43; </p> <input id='countryCode' required="required" placeholder="Enter Country Code without + sign" type="number" value="91" disabled ></div> <div><a href='' id='changeCountryBtn'>Change Country Code</a><a href='' id='resetCountryBtn'>Reset Country Code</a></div></span><br>
 
-here"></br><input type="Submit" value="Send" 
 
-style='background:rgba(10, 100, 10, 0.5)'>
+
+<input type="number" placeholder="type mobile number" id="mobNumber" minlength="10" name="mobNumber" required="required"><p id='er'></p></br> 
+ <input type="text" id="msg"  name="msg" placeholder="type msg here"></br>
+<input type="Submit" value="Send" style='background:rgba(10, 100, 10, 0.5)'>
 
 </form>
 
 
 
+
 <script>
 var frm = document.getElementById('frm');
-
+var submitBtn = document.querySelector("input[type=submit]");
+var countryCode = document.querySelector("#countryCode");
+var changeCountryBtn = document.querySelector("#changeCountryBtn");
+var resetCountryBtn = document.querySelector("#resetCountryBtn");
 var mob = document.getElementById('mobNumber');
+var er = document.querySelector("#er");
+
+
+countryCode.value = window.localStorage.getItem('countryCode') || 91;
+
+resetCountryBtn.addEventListener('click', () => {
+window.localStorage.setItem('countryCode', 91);
+    countryCode.value = 91;
+});
+
+
+
 
 frm.onsubmit = async function (e){
 e.preventDefault(); 
 var sd = mob.value.trim().split('').splice(-10).join('');
-var msg = document.getElementById("msg").value; 
-let ur = `whatsapp://send?phone=91${sd}&text=${encodeURI(msg)}`;
-console.log(ur);
-window.open(ur);
+var msg = document.getElementById("msg").value;
+if(msg && sd){
+    let ur = `whatsapp://send?phone=${countryCode.value}${sd}&text=${encodeURI(msg)}`;
+}else if(sd){
+    let ur = `whatsapp://send?phone=${countryCode.value}${sd}`;
+}
+
+
+
+console.log(ur)
+//window.open(ur);
 }
 
 
 mob.oninput = function (e){
-var sd = e.target.value.trim().split('').splice(-10).join('');
-document.getElementById('mobNumber').value = '';
-document.getElementById('mobNumber').value = sd;
-console.log(sd);
+if(mob.value.length != 10){
+    console.log('err')
+er.innerHTML = "Check Mobile Number";
+submitBtn.disabled = true;
+}else{
+    er.innerHTML = "";
+submitBtn.disabled = false;
 }
 
 
+}
 
+changeCountryBtn.addEventListener('click', focusCountryCode)
 
+function focusCountryCode(e){e.preventDefault();  var ip  = document.querySelector('#countryCode'); ip.disabled = false; ip.focus()}
+
+countryCode.addEventListener("focusout", (e) => {e.target.disabled = true; window.localStorage.setItem('countryCode', e.target.value)})
 
 
 </script>
-
-
 </body>
 </html>
