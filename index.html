@@ -28,6 +28,11 @@ input[type=number] {
 #countryCode{width: 3rem; min-width: 10px; border: none;margin-left:0px;text-align: left; background: transparent; box-shadow: none;}
 #countryCode:focus{border-radius: 5px; border: solid thin rgba(0, 0, 12, 0.3); outline: transparent;}
 ::placeholder{color: rgba(0, 0, 12, 0.3)}
+#scanner{display: block; text-align: center; background: transparent; border-top: solid white; padding: 5px; box-shadow: 0px -5px 10px grey; position: absolute; bottom: 0px; width: 100%;}
+#scannerBtn{font-size: x-large; text-decoration: none; width: 75px; aspect-ratio: 1; display: contents; position: absolute; bottom: 0px; padding: 10px; box-shadow: 0px -5px 10px grey outset; background: rgba(10, 100, 10, 1); }
+#scannerBtn img{width: 75px; aspect-ratio: 1; padding: 10px; border-radius: 50%; border: solid white thin;  box-shadow:  0px 0px 10px 5px grey; background: radial-gradient( transparent, rgba(10,100,10));    background-origin: content-box;}
+
+
 </style>
 </head>
 <body>
@@ -47,6 +52,13 @@ input[type=number] {
 
 </form>
 
+<div id="scanner">
+    
+    <a id="scannerBtn" href="go:scanner"><img src="https://img.icons8.com/ios/100/null/qr-code--v1.png" />
+        
+    </a>
+
+</div>
 
 
 
